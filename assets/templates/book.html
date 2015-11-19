@@ -1,0 +1,28 @@
+<div class="container" ng-controller="BookCtrl">
+<input type="text" ng-model="nameFilter" placeholder="Search..."/>
+	<div class="jumbotron">
+        <h1 align="center">Used Book Application</h1>
+        <br>
+        <div id="book-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg text-center" placeholder="Add Book!" ng-model="formData.value">
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-lg" ng-click="addBook()">Add Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="book-list" class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="checkbox" ng-repeat="book in books">
+                <label>
+                    <input type="checkbox" ng-click="removeBook(book)">
+                    {{ book.value }}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
