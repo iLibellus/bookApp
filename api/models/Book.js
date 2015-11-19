@@ -6,11 +6,15 @@
 */
 
 module.exports = {
-
   attributes: {
-    value: {
-      'type': 'text'
+    name: {
+      type: 'string'
+    },
+
+    author: {
+      type: 'string'
     }
+
   }
-};
+}
 

@@ -15,6 +15,7 @@ bookApp.config(['$routeProvider',
   bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', function($scope, $rootScope, BookService) {
       $scope.formData = {};
       $scope.books = [];
+	$scope.nameFilter = null;
     
       BookService.getBooks().then(function(response) {
         $scope.books = response;
