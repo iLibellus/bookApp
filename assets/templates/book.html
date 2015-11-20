@@ -1,6 +1,4 @@
 <div class="container" ng-controller="BookCtrl">
-<input type="text" ng-model="nameFilter" placeholder="Search..."/>
-<tr ng-repeat="driver in driversList | filter: searchFilter">
 	<div class="jumbotron">
         <h1 align="center">Used Book Application</h1>
         <br>
@@ -13,12 +11,14 @@
                         <button type="submit" class="btn btn-primary btn-lg" ng-click="addBook()">Add Book</button>
                     </div>
                 </form>
+				<input type="text" ng-model="nameFilter" placeholder="Search..."/>
             </div>
         </div>
+		
     </div>
     <div id="book-list" class="row">
         <div class="col-sm-4 col-sm-offset-4">
-            <div class="checkbox" ng-repeat="book in books">
+            <div class="checkbox" ng-repeat="book in books | filter:nameFilter">
                 <label>
                     <input type="checkbox" ng-click="removeBook(book)">
                     {{ book.value }}

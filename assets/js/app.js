@@ -33,9 +33,9 @@ bookApp.config(['$routeProvider',
           $scope.books.splice($scope.books.indexOf(book), 1)
         });
       }
-	$scope.searchFilter = function (book) {
+	$scope.nameFilter = function (book) {
     	var keyword = new RegExp($scope.nameFilter, 'i');
-    	return !$scope.nameFilter || keyword.test(book.Book.name) || keyword.test(book.Book.author);
+    	return !$scope.nameFilter || keyword.test(book.name) || keyword.test(book.author);
 	};
 }]);
 
