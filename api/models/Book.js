@@ -14,7 +14,6 @@ module.exports = {
     author: {
       type: 'string'
     }
-
   }
 }
 

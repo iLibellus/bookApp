@@ -20,10 +20,20 @@
         <div class="col-sm-4 col-sm-offset-4">
             <div class="checkbox" ng-repeat="book in books | filter:nameFilter">
                 <label>
-                    <input type="checkbox" ng-click="removeBook(book)">
-                    {{ book.value }}
+                    <input type="checkbox" ng-click="removeBook(book)"> <a href="#bookinfo/{ {book.name} }">{{ book.value }}</a>
+                    
                 </label>
             </div>
+			<div class="info"><a href="#bookinfo/{ {book.name} }">Click here</a>
+        </div>
+    </div>
+
+<div class="row">
+        <div class="form-inline">
+            <form ng-submit="searchBook()" class="form-inline">
+                <input type="text" class="form-control" placeholder="Enter the name of an actor or movie (or just the bits you remember)" style="width: 93%;" ng-model="searchText" />
+                <input type="submit" class="btn btn-primary" value="Search" />
+            </form>
         </div>
     </div>
 </div>
