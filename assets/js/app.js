@@ -53,8 +53,12 @@ bookApp.controller('BookiInfoCtrl',['$scope', 'BookInfoService', function($scope
 	//Initialise Error Handler
 	$scope.notFound = false;
 
+	BookInfoService.findBookById(bookId).then(function(response) {
+        $scope.book = response;
+      });
+
 	$scope.findBookById = function(book) {
-		BookService.findBookById(book).then(function(response) {
+		BookInfoService.findBookById(book).then(function(response) {
 			$scope.book = response;
 		})
 	}	

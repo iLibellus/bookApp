@@ -8,7 +8,7 @@
 module.exports = {
     getBookById: function(req, res) {
 	var bookId = parseInt(request.param("bookId"), 10);
-    BookService.getBookById(function(bookId) {
+    BookInfoService.getBookById(function(bookId) {
         res.json(book);
     });
    }
