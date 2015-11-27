@@ -10,30 +10,30 @@ bookApp.config(['$routeProvider',
 	   .when('/bookinfo/:bookid',{
 	   			//Profile View Routing to profile.html and controller - ProfileController
 				templateUrl:'/templates/detail.html',
-				controller:'BookiInfoCtrl'
+				controller:'BookInfoCtrl'
 		})
 		.otherwise({
 		  redirectTo: '/',
 		  caseInsensitiveMatch: true
 		})
   }]);
-  
+
   bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', function($scope, $rootScope, BookService) {
       $scope.formData = {};
       $scope.books = [];
 	  $scope.nameFilter = null;
-    
+
       BookService.getBooks().then(function(response) {
         $scope.books = response;
       });
-    
+
       $scope.addBook = function() {
         BookService.addBook($scope.formData).then(function(response) {
           $scope.books.push($scope.formData)
           $scope.formData = {};
         });
       }
-      
+
       $scope.removeBook = function(book) {
         BookService.removeBook(book).then(function(response) {
           $scope.books.splice($scope.books.indexOf(book), 1)
@@ -45,7 +45,7 @@ bookApp.config(['$routeProvider',
 	};
 }]);
 
-bookApp.controller('BookiInfoCtrl',['$scope', 'BookInfoService', function($scope,$http,$log,$routeParams){
+bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
 	//Store detail id in Controller
 	$scope.bookid = $routeParams.bookid;
 	//Initialist the book Data
@@ -53,7 +53,7 @@ bookApp.controller('BookiInfoCtrl',['$scope', 'BookInfoService', function($scope
 	//Initialise Error Handler
 	$scope.notFound = false;
 
-	BookInfoService.findBookById(bookId).then(function(response) {
+	BookInfoService.findBookById($scope.bookid).then(function(response) {
         $scope.book = response;
       });
 
@@ -61,7 +61,5 @@ bookApp.controller('BookiInfoCtrl',['$scope', 'BookInfoService', function($scope
 		BookInfoService.findBookById(book).then(function(response) {
 			$scope.book = response;
 		})
-	}	
+	}
 }]);
-
-

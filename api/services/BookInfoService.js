@@ -1,6 +1,6 @@
 module.exports = {
-  getBookById: function(where, next) {
-    Book.find(where).exec(function(err, book) {
+  getBookById: function(bookVal, next) {
+    Book.find({name: bookVal}).exec(function(err, book) {
       if(err) throw err;
       next(book);
     });

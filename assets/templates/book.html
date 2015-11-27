@@ -1,4 +1,4 @@
-<div class="container" ng-controller="BookCtrl as ctrl">
+<div class="container" ng-controller="BookCtrl">
 	<div class="jumbotron">
         <h1 align="center">Used Book Application</h1>
         <br>
@@ -14,14 +14,14 @@
 				<input type="text" ng-model="nameFilter" placeholder="Search..."/>
             </div>
         </div>
-		
+
     </div>
     <div id="book-list" class="row">
         <div class="col-sm-4 col-sm-offset-4">
             <div class="checkbox" ng-repeat="book in books | filter:nameFilter">
                 <label>
                     <input type="checkbox" ng-click="removeBook(book)"> <a href="#bookinfo/{{book.value}}">{{ book.value }}</a>
-                    
+
                 </label>
             </div>
 			<div class="info"><a href="#bookinfo/{{book.value}}">Click here</a>
@@ -38,9 +38,9 @@
     </div>
 
 <div class="row">
-<form name="myForm" ng-submit="ctrl.addBook()">
-             Name: <input type="text" ng-model="ctrl.book.name">
-             Author: <input type="text" ng-model="ctrl.book.author">
+<form name="myForm" ng-submit="addBook()">
+             Name: <input type="text" ng-model="book.name">
+             Author: <input type="text" ng-model="book.author">
              <input type="submit" value="Register">
          </form>
 </div>

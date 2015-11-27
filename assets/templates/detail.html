@@ -1,4 +1,9 @@
+<div class="container" ng-controller="BookInfoCtrl as ctrl2">
 <table ng-show="!notFound" class="table table-striped">
+	<tr>
+		<td><strong>BookId passed:</strong></td>
+		<td><strong>{{bookid}}</strong></td>
+	</tr>
 	<tr>
 	  <td><strong>Name : </strong></td>
 	  <!-- Print the name -->
@@ -13,3 +18,4 @@
 	  <td>{{book.value}}</td>
 	</tr>
 </table>
+</div>
