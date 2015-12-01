@@ -11,16 +11,17 @@
                         <button type="submit" class="btn btn-primary btn-lg" ng-click="addBook()">Add Book</button>
                     </div>
                 </form>
-				<input type="text" ng-model="nameFilter" placeholder="Search..."/>
+				<input type="text" ng-model="simpleFilter" placeholder="Search..."/>
             </div>
         </div>
 
     </div>
     <div id="book-list" class="row">
         <div class="col-sm-4 col-sm-offset-4">
-            <div class="checkbox" ng-repeat="book in books | filter:nameFilter">
+            <div class="checkbox" ng-repeat="book in books | filter:simpleFilter">
                 <label>
                     <input type="checkbox" ng-click="removeBook(book)"> <a href="#bookinfo/{{book.value}}">{{ book.value }}</a>
+										<a href="#bookinfo/{{book.name}}">{{ book.name}}</a>
 
                 </label>
             </div>
@@ -38,10 +39,12 @@
     </div>
 
 <div class="row">
-<form name="myForm" ng-submit="addBook()">
-             Name: <input type="text" ng-model="book.name">
-             Author: <input type="text" ng-model="book.author">
-             <input type="submit" value="Register">
-         </form>
+	<form>
+		<div class="form-group">
+       Name: <input type="text" ng-model="formData.name">
+       Author: <input type="text" ng-model="formData.author">
+       <button type="submit" class="btn btn-primary btn-lg" ng-click="addBook()">Add Book</button>
+		</div>
+  </form>
 </div>
 </div>

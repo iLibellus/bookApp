@@ -7,10 +7,10 @@
 
 module.exports = {
     getBookById: function(req, res) {
-	var bookId = parseInt(request.param("bookId"), 10);
-    BookInfoService.getBookById(function(bookId) {
+	//var bookId = req.param("bookid");
+  var bookId = (req.body.value) ? req.body.value : undefined
+    BookInfoService.getBookById(bookId, function(book) {
         res.json(book);
     });
    }
 };
-

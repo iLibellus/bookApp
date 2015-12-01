@@ -7,8 +7,8 @@ module.exports = {
       next(books);
     });
   },
-  addBook: function(bookVal, next) {
-    Book.create({name: bookVal}).exec(function(err, book) {
+  addBook: function(bookVal, bookAuthor, next) {
+    Book.create({name: bookVal, author: bookAuthor}).exec(function(err, book) {
       if(err) throw err;
       next(book);
     });
