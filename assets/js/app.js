@@ -57,9 +57,9 @@ bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'B
         $scope.book = response;
       });
 
-	$scope.findBookById = function(book) {
-		BookInfoService.findBookById(book).then(function(response) {
-			$scope.book = response;
-		})
-	}
+	//$scope.findBookById = function(book) {
+		//BookInfoService.findBookById(book).then(function(response) {
+			//$scope.book = response;
+		//})
+	//}
 }]);

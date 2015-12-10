@@ -8,7 +8,8 @@
 module.exports = {
     getBookById: function(req, res) {
 	//var bookId = req.param("bookid");
-  var bookId = (req.body.value) ? req.body.value : undefined
+  var bookId = (req.param.bookid) ? req.param.bookid : undefined
+  console.log('Retrives book with name: ' + bookId)
     BookInfoService.getBookById(bookId, function(book) {
         res.json(book);
     });

@@ -2,16 +2,10 @@
 	<div class="jumbotron">
         <h1 align="center">Used Book Application</h1>
         <br>
-        <div id="book-form" class="row">
+        <div id="search-form" class="row">
             <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-lg text-center" placeholder="Add Book!" ng-model="formData.value">
-                        <br>
-                        <button type="submit" class="btn btn-primary btn-lg" ng-click="addBook()">Add Book</button>
-                    </div>
-                </form>
-				<input type="text" ng-model="simpleFilter" placeholder="Search..."/>
+
+							<input type="text" class="form-control input-lg text-center" ng-model="simpleFilter" placeholder="Search..."/>
             </div>
         </div>
 
@@ -21,11 +15,9 @@
             <div class="checkbox" ng-repeat="book in books | filter:simpleFilter">
                 <label>
                     <input type="checkbox" ng-click="removeBook(book)"> <a href="#bookinfo/{{book.value}}">{{ book.value }}</a>
-										<a href="#bookinfo/{{book.name}}">{{ book.name}}</a>
-
+										<a href="#bookinfo/{{book.name}}">{{ book.name + ' BookName ' + book.author}}</a>
                 </label>
             </div>
-			<div class="info"><a href="#bookinfo/{{book.value}}">Click here</a>
         </div>
     </div>
 
@@ -38,13 +30,15 @@
         </div>
     </div>
 
-<div class="row">
-	<form>
-		<div class="form-group">
-       Name: <input type="text" ng-model="formData.name">
-       Author: <input type="text" ng-model="formData.author">
-       <button type="submit" class="btn btn-primary btn-lg" ng-click="addBook()">Add Book</button>
+	<div id="book-form" class="row">
+		<div class="col-sm-8 col-sm-offset-2 text-center">
+			<form>
+				<div class="form-group">
+		       Name: <input type="text" class="form-control input-lg text-center" ng-model="formData.name" placeholder="Enter title">
+		       Author: <input type="text" class="form-control input-lg text-center" ng-model="formData.author" placeholder="Enter author">
+		       <button type="submit" class="btn btn-primary btn-lg" ng-click="addBook()">Add Book</button>
+				</div>
+	  	</form>
 		</div>
-  </form>
-</div>
+	</div>
 </div>

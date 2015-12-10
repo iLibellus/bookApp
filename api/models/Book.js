@@ -8,7 +8,8 @@
 module.exports = {
   attributes: {
     name: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
     author: {
@@ -16,4 +17,3 @@ module.exports = {
     }
   }
 }
-
