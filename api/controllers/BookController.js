@@ -29,11 +29,7 @@ module.exports = {
         });
     },
     getBookByName: function(req, res) {
-
       var bookId = req.param('bookid');
-      var values = req.allParams();
-      console.log('BookController Retrives book with values: ' + values )
-      console.log('BookController Retrives book with name: ' + bookId )
       BookInfoService.getBookById(bookId, function(book) {
           res.json(book);
       });

@@ -14,8 +14,8 @@
         <div class="col-sm-4 col-sm-offset-4">
             <div class="checkbox" ng-repeat="book in books | filter:simpleFilter">
                 <label>
-                    <input type="checkbox" ng-click="removeBook(book)"> <a href="#bookinfo/{{book.value}}">{{ book.value }}</a>
-										<a href="#bookinfo/{{book.name}}">{{ book.name + ' BookName ' + book.author}}</a>
+                    <input type="checkbox" ng-click="removeBook(book)"> <a href="#book/getBookByName/{{book.value}}">{{ book.value }}</a>
+										<a href="#book/getBookByName/{{book.name}}">{{ book.name + ' BookName ' + book.author}}</a>
                 </label>
             </div>
         </div>

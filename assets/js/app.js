@@ -7,7 +7,7 @@ bookApp.config(['$routeProvider',
       templateUrl: '/templates/book.html',
       controller: 'BookCtrl'
     }) //.when adds new route definition to $route service
-	   .when('/bookinfo/:bookid',{
+	   .when('/book/getBookByName/:bookid',{
 	   			//Profile View Routing to profile.html and controller - ProfileController
 				templateUrl:'/templates/detail.html',
 				controller:'BookInfoCtrl'
@@ -55,6 +55,7 @@ bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'B
 
 	BookInfoService.findBookById($scope.bookid).then(function(response) {
         $scope.book = response;
+        $log.info(response);
       });
 
 	//$scope.findBookById = function(book) {
@@ -63,3 +64,14 @@ bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'B
 		//})
 	//}
 }]);
+
+bookApp.controller('ModalController', function($scope, $modal) {
+  // Show a basic modal from a controller
+  var myModal = $modal({title: 'Book details', content: 'My Content', show: true});
+  // Pre-fetch an external template populated with a custom scope
+  var myOtherModal = $modal({scope: $scope, template: '/templates/modal/modal.demo.tpl.html', show: false});
+  // Show when some event occurs (use $promise property to ensure the template has been loaded)
+  $scope.showModal = function() {
+    myOtherModal.$promise.then(myOtherModal.show);
+  };
+});
