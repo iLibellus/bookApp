@@ -17,6 +17,14 @@
                     <input type="checkbox" ng-click="removeBook(book)"> <a href="#book/getBookByName/{{book.value}}">{{ book.value }}</a>
 										<a href="#book/getBookByName/{{book.name}}">{{ book.name + ' BookName ' + book.author}}</a>
                 </label>
+								<div id="book-info" class="row" ng-controller="ModalController">
+									<div class="col-sm-8 col-sm-offset-2 text-center">
+										<button type="button" class="btn btn-lg btn-primary" data-animation="am-fade-and-scale" ng-click="showModal(book)">Show Details
+												<br>
+												<small>(using an object)</small>
+										</button>
+									</div>
+								</div>
             </div>
         </div>
     </div>
@@ -41,4 +49,21 @@
 	  	</form>
 		</div>
 	</div>
+	<div id="book-info" class="row">
+		<button ng-click="toggleModal()" class="btn btn-default">Open modal</button>
+	</div>
+
+<div>
+    <form role="form">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password" />
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+  </modal>
+</div>
 </div>

@@ -21,7 +21,7 @@ bookApp.config(['$routeProvider',
   bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', function($scope, $rootScope, BookService) {
       $scope.formData = {};
       $scope.books = [];
-	  $scope.nameFilter = null;
+	    $scope.nameFilter = null;
 
       BookService.getBooks().then(function(response) {
         $scope.books = response;
@@ -39,10 +39,10 @@ bookApp.config(['$routeProvider',
           $scope.books.splice($scope.books.indexOf(book), 1)
         });
       }
-	$scope.nameFilter = function (book) {
-    	var keyword = new RegExp($scope.nameFilter, 'i');
-    	return !$scope.nameFilter || keyword.test(book.name) || keyword.test(book.author);
-	};
+  	$scope.nameFilter = function (book) {
+      	var keyword = new RegExp($scope.nameFilter, 'i');
+      	return !$scope.nameFilter || keyword.test(book.name) || keyword.test(book.author);
+  	};
 }]);
 
 bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
@@ -66,12 +66,11 @@ bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'B
 }]);
 
 bookApp.controller('ModalController', function($scope, $modal) {
-  // Show a basic modal from a controller
-  var myModal = $modal({title: 'Book details', content: 'My Content', show: true});
   // Pre-fetch an external template populated with a custom scope
-  var myOtherModal = $modal({scope: $scope, template: '/templates/modal/modal.demo.tpl.html', show: false});
+  var myModal = $modal({scope: $scope, animation:"am-fade-and-scale", template: '/templates/modal/modal.bookinfo.tpl.html', show: false});
   // Show when some event occurs (use $promise property to ensure the template has been loaded)
-  $scope.showModal = function() {
-    myOtherModal.$promise.then(myOtherModal.show);
+  $scope.showModal = function(book) {
+    $scope.selectedBook = book
+    myModal.$promise.then(myModal.show);
   };
 });
