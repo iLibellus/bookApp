@@ -52,7 +52,11 @@
 	<div id="book-info" class="row">
 		<button ng-click="toggleModal()" class="btn btn-default">Open modal</button>
 	</div>
-
+<div id="image-upload">
+<droplet ng-model="interface">
+	<input type="button" value="Upload Files" ng-click="interface.uploadFiles()"/>
+</droplet>
+</div>
 <div>
     <form role="form">
       <div class="form-group">

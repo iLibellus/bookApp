@@ -14,6 +14,10 @@ module.exports = {
 
     author: {
       type: 'string'
+    },
+
+    imageUrl: {
+      type: 'string'
     }
   }
 }

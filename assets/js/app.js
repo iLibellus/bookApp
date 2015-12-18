@@ -22,6 +22,7 @@ bookApp.config(['$routeProvider',
       $scope.formData = {};
       $scope.books = [];
 	    $scope.nameFilter = null;
+      $scope.selectedImage = {};
 
       BookService.getBooks().then(function(response) {
         $scope.books = response;
@@ -39,10 +40,19 @@ bookApp.config(['$routeProvider',
           $scope.books.splice($scope.books.indexOf(book), 1)
         });
       }
-  	$scope.nameFilter = function (book) {
+  	  $scope.nameFilter = function (book) {
       	var keyword = new RegExp($scope.nameFilter, 'i');
       	return !$scope.nameFilter || keyword.test(book.name) || keyword.test(book.author);
-  	};
+  	  };
+
+      $scope.imageUpload = function (image) {
+        BookService.uploadFile(image).then(function(response) {
+          $log.info(response);
+        });
+      }
+      $scope.$on('$dropletReady', function whenDropletReady() {
+        $scope.interface.allowedExtensions(['png', 'jpg', 'bmp', 'gif']);
+      });
 }]);
 
 bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){

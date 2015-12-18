@@ -12,13 +12,14 @@ module.exports = {
         });
     },
     addBook: function(req, res) {
+
         var bookVal = (req.body.value) ? req.body.value : undefined
         var bookName = (req.body.name) ? req.body.name : undefined
         var bookAuthor = (req.body.author) ? req.body.author : undefined
         console.log('Added book with bookVal: ' + bookVal)
         console.log('Added book with bookName: ' + bookName)
         console.log('Added book with author: ' + bookAuthor)
-        BookService.addBook(bookName, bookAuthor, function(success) {
+        BookService.addBook(id, bookName, bookAuthor, function(success) {
             res.json(success);
         });
     },
