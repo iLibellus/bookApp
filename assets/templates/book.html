@@ -53,8 +53,16 @@
 		<button ng-click="toggleModal()" class="btn btn-default">Open modal</button>
 	</div>
 <div id="image-upload">
+<button button class="btn btn-primary" ng-click="interface.uploadFiles()">Upload</button>
 <droplet ng-model="interface">
-	<input type="button" value="Upload Files" ng-click="interface.uploadFiles()"/>
+	Drop your images here...
+	<ul class="files">
+            <li ng-repeat="file in upload.getFiles(upload.FILE_TYPES.VALID)">
+                <droplet-preview ng-model="file"></droplet-preview>
+                <div class="delete" ng-click="file.deleteFile()">&times;</div>
+                <div class="size">{{file.file.size / 1024 / 1024 | number: 1}}MB</div>
+            </li>
+        </ul>
 </droplet>
 </div>
 <div>
