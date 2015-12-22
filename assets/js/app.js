@@ -18,11 +18,12 @@ bookApp.config(['$routeProvider',
 		})
   }]);
 
-  bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', function($scope, $rootScope, BookService) {
+  bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', 'ngDroplet', function($scope, $rootScope, BookService, ngDroplet) {
       $scope.formData = {};
       $scope.books = [];
 	    $scope.nameFilter = null;
       $scope.selectedImage = {};
+      $scope.interface = {};
 
       BookService.getBooks().then(function(response) {
         $scope.books = response;
