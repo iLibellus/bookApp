@@ -57,9 +57,9 @@
 
 	    <section class="container">
 
-	        <section class="droplet" ng-class="{ uploading: interface.isUploading() }">
+	        <section class="droplet" ng-controller="FileController" ng-class="{ uploading: interface.isUploading() }">
 
-	            <h1><a target="_blank" href="https://github.com/Wildhoney/ngDroplet">ngDroplet</a></h1>
+	            <h1>ngDroplet</h1>
 
 	            <ul class="statistics">
 	                <li><label>Valid:</label> {{interface.getFiles(interface.FILE_TYPES.VALID).length}}</li>

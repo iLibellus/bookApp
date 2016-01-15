@@ -27,8 +27,8 @@ bookApp.service('BookService', function($http, $q) {
       });
       return defer.promise;
     },
-    'uploadFile': function(image) {
-      $http.post('/file/uploadImage', image).success(function(resp){
+    'uploadFile': function(images) {
+      $http.post('/file/uploadImage', images).success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);

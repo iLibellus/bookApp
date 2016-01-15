@@ -1,6 +1,6 @@
 'use strict';
 
-var bookApp = angular.module('bookApp', ['ngRoute', 'ngAnimate', 'mgcrea.ngStrap']);
+var bookApp = angular.module('bookApp', ['ngRoute', 'ngAnimate', 'mgcrea.ngStrap', 'ngDroplet']);
 bookApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.when('/', {
@@ -18,7 +18,7 @@ bookApp.config(['$routeProvider',
 		})
   }]);
 
-  bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', 'ngDroplet', function($scope, $rootScope, BookService, ngDroplet) {
+  bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', function($scope, $rootScope, BookService) {
       $scope.formData = {};
       $scope.books = [];
 	    $scope.nameFilter = null;
@@ -45,15 +45,6 @@ bookApp.config(['$routeProvider',
       	var keyword = new RegExp($scope.nameFilter, 'i');
       	return !$scope.nameFilter || keyword.test(book.name) || keyword.test(book.author);
   	  };
-
-      $scope.imageUpload = function (image) {
-        BookService.uploadFile(image).then(function(response) {
-          $log.info(response);
-        });
-      }
-      $scope.$on('$dropletReady', function whenDropletReady() {
-        $scope.interface.allowedExtensions(['png', 'jpg', 'bmp', 'gif']);
-      });
 }]);
 
 bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
@@ -84,4 +75,81 @@ bookApp.controller('ModalController', function($scope, $modal) {
     $scope.selectedBook = book
     myModal.$promise.then(myModal.show);
   };
+});
+
+bookApp.controller('FileController', ['$scope', '$timeout', 'BookService', function($scope, $timeout, BookService) {
+    $scope.interface = {};
+    $scope.uploadCount = 0;
+    $scope.success = false;
+    $scope.error = false;
+
+    // Listen for when the interface has been configured.
+    $scope.$on('$dropletReady', function whenDropletReady() {
+
+            $scope.interface.allowedExtensions(['png', 'jpg', 'bmp', 'gif', 'svg', 'torrent']);
+            $scope.interface.setRequestUrl('/file/uploadImage');
+            $scope.interface.defineHTTPSuccess([/2.{2}/]);
+            $scope.interface.useArray(false);
+
+    });
+
+    // Listen for when the files have been successfully uploaded.
+    $scope.$on('$dropletSuccess', function onDropletSuccess(event, response, files) {
+
+        $scope.uploadCount = files.length;
+        $scope.success     = true;
+        console.log(response, files);
+
+        $timeout(function timeout() {
+            $scope.success = false;
+        }, 5000);
+
+    });
+
+    // Listen for when the files have failed to upload.
+    $scope.$on('$dropletError', function onDropletError(event, response) {
+
+        $scope.error = true;
+        console.log(response);
+
+        $timeout(function timeout() {
+            $scope.error = false;
+        }, 5000);
+
+    });
+}]);
+
+bookApp.directive('progressbar', function ProgressbarDirective() {
+
+    return {
+        restrict: 'A',
+        scope: {
+            model: '=ngModel'
+        },
+
+        require: 'ngModel',
+
+        link: function link(scope, element) {
+
+            var progressBar = new ProgressBar.Path(element[0], {
+                strokeWidth: 2
+            });
+
+            scope.$watch('model', function() {
+
+                progressBar.animate(scope.model / 100, {
+                    duration: 1000
+                });
+
+            });
+
+            scope.$on('$dropletSuccess', function onSuccess() {
+                progressBar.animate(0);
+            });
+
+            scope.$on('$dropletError', function onSuccess() {
+                progressBar.animate(0);
+            });
+        }
+    }
 });

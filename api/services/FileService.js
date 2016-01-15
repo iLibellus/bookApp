@@ -3,7 +3,7 @@
 module.exports = {
   uploadImage: function(next) {
     // Save the "fd" and the url where the image of a book can be accessed
-    File.create(req.session.me, {
+    File.create({
 
       // Generate a unique URL where the image can be downloaded.
       imageUrl: require('util').format('%s/assets/images/%s', sails.getBaseUrl(), req.session.me),

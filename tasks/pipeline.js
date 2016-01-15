@@ -32,6 +32,8 @@ var jsFilesToInject = [
 	'/bower_components/angular-animate/angular-animate.js',
 	'/bower_components/angular-strap/dist/angular-strap.min.js',
 	'/bower_components/angular-strap/dist/angular-strap.tpl.min.js',
+  '/bower_components/ng-droplet/dist/ng-droplet.min.js',
+  '/bower_components/progressbar.js/dist/progressbar.min.js',
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
 
