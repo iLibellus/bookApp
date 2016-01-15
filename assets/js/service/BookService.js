@@ -34,5 +34,32 @@ bookApp.service('BookService', function($http, $q) {
         defer.reject(err);
       });
       return defer.promise;
+    },
+    'searchRemoteBook': function(query) {
+      var defer = $q.defer();
+      var queryString = 'http://libris.kb.se/xsearch?query=' + query + '&format=json';
+      var defer = $q.defer();
+      $http.get(queryString).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'searhJASONP': function(query) {
+      var defer = $q.defer();
+      var url = 'http://libris.kb.se/xsearch?query=' + query + '&format=json';
+      $http({
+            method: 'JSONP',
+            url: url,
+            params : {callback : 'JSON_CALLBACK'}
+        }).
+        success(function(resp) {
+            defer.resolve(resp);
+        }).
+        error(function(err) {
+            defer.reject(err);
+        });
+      return defer.promise;
     }
 }});

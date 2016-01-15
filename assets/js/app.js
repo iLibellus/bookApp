@@ -18,12 +18,14 @@ bookApp.config(['$routeProvider',
 		})
   }]);
 
-  bookApp.controller('BookCtrl', ['$scope', '$rootScope', 'BookService', function($scope, $rootScope, BookService) {
+  bookApp.controller('BookCtrl', ['$scope', '$rootScope', '$log','BookService', function($scope, $rootScope, $log, BookService) {
       $scope.formData = {};
       $scope.books = [];
 	    $scope.nameFilter = null;
       $scope.selectedImage = {};
       $scope.interface = {};
+      $scope.bookQuery = {};
+      $scope.details = [];
 
       BookService.getBooks().then(function(response) {
         $scope.books = response;
@@ -45,9 +47,18 @@ bookApp.config(['$routeProvider',
       	var keyword = new RegExp($scope.nameFilter, 'i');
       	return !$scope.nameFilter || keyword.test(book.name) || keyword.test(book.author);
   	  };
+
+      $scope.searchRemote = function() {
+        var query = $scope.bookQuery;
+        BookService.searhJASONP(query).then(function(response) {
+          //$log.info(response);
+          $log.info(response);
+          $scope.details = response;
+        });
+      }
 }]);
 
-bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log' ,'$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
+bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log', '$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
 	//Store detail id in Controller
 	$scope.bookid = $routeParams.bookid;
 	//Initialist the book Data

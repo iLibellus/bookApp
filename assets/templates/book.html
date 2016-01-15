@@ -29,15 +29,24 @@
         </div>
     </div>
 
-<div class="row">
+		<div class="row">
         <div class="form-inline">
-            <form ng-submit="searchBook()" class="form-inline">
-                <input type="text" class="form-control" placeholder="Enter the name of an actor or movie (or just the bits you remember)" style="width: 93%;" ng-model="searchText" />
-                <input type="submit" class="btn btn-primary" value="Search" />
+            <form ng-submit="searchRemote()" class="form-inline">
+            <input type="text" class="form-control" placeholder="Enter the name of an actor or movie (or just the bits you remember)" style="width: 93%;" ng-model="bookQuery" />
+            <input type="submit" class="btn btn-primary" ng-click="searchRemote()" />
             </form>
         </div>
     </div>
-
+		<div id="book-search-result" class="row">
+			<p>{{details}}</p>
+			<!--<ul>
+				<li ng-repeat="detail in details">
+						<p>{{detail.title}}</p>
+						<p>{{detail.creator}}</p>
+						<p>{{detail.isbn}}</p>
+				</li>
+			</ul>-->
+		</div>
 	<div id="book-form" class="row">
 		<div class="col-sm-8 col-sm-offset-2 text-center">
 			<form>
