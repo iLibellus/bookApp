@@ -38,15 +38,23 @@
         </div>
     </div>
 		<div id="book-search-result" class="row">
-			<p>{{details}}</p>
-			<!--<ul>
+			<!--<p>{{details}}</p>-->
+			<ul>
 				<li ng-repeat="detail in details">
 						<p>{{detail.title}}</p>
 						<p>{{detail.creator}}</p>
 						<p>{{detail.isbn}}</p>
 				</li>
-			</ul>-->
+			</ul>
+			<p>{{isbnResponse}}</p>
 		</div>
+	<div id="isbn-search-result" class="row">
+			<input type="text" class="form-control" placeholder="Enter isbn" style="width: 93%;" ng-model="bookInfo" />
+			<input type="submit" class="btn btn-primary" ng-click="isbnSearch()" />
+	</div>
+	<div id="isbn-search-results" class="row">
+		<img ng-src="{{thumbnail}}" />
+	</div>
 	<div id="book-form" class="row">
 		<div class="col-sm-8 col-sm-offset-2 text-center">
 			<form>

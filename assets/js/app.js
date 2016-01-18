@@ -26,6 +26,9 @@ bookApp.config(['$routeProvider',
       $scope.interface = {};
       $scope.bookQuery = {};
       $scope.details = [];
+      $scope.bookInfo = {};
+      $scope.thumbnail = {};
+      $scope.isbnResponse = null;
 
       BookService.getBooks().then(function(response) {
         $scope.books = response;
@@ -53,7 +56,16 @@ bookApp.config(['$routeProvider',
         BookService.searhJASONP(query).then(function(response) {
           //$log.info(response);
           $log.info(response);
-          $scope.details = response;
+          //$scope.details = response;
+          $scope.details = response.xsearch.list;
+        });
+      };
+
+      $scope.isbnSearch = function() {
+        var isbn = $scope.bookInfo;
+        BookService.isbnSearch(isbn).then(function(response) {
+            $scope.isbnResponse = response;
+            $scope.thumbnail = response.items[0].volumeInfo.imageLinks.thumbnail;
         });
       }
 }]);

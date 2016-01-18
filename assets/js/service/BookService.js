@@ -61,5 +61,21 @@ bookApp.service('BookService', function($http, $q) {
             defer.reject(err);
         });
       return defer.promise;
+    },
+    'isbnSearch': function(isbn) {
+      var defer = $q.defer();
+      var url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn;
+      $http({
+            method: 'JSONP',
+            url: url,
+            params : {callback : 'JSON_CALLBACK'}
+        }).
+        success(function(resp) {
+            defer.resolve(resp);
+        }).
+        error(function(err) {
+            defer.reject(err);
+        });
+      return defer.promise;
     }
 }});
