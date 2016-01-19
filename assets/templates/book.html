@@ -46,14 +46,28 @@
 						<p>{{detail.isbn}}</p>
 				</li>
 			</ul>
-			<p>{{isbnResponse}}</p>
 		</div>
 	<div id="isbn-search-result" class="row">
-			<input type="text" class="form-control" placeholder="Enter isbn" style="width: 93%;" ng-model="bookInfo" />
+			<input type="text" class="form-control" placeholder="Enter isbn" onclick="isbnSearch()" style="width: 93%;" ng-model="bookInfo" />
+			<span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
 			<input type="submit" class="btn btn-primary" ng-click="isbnSearch()" />
+			<p>Search icon: <span class="glyphicon glyphicon-search"></span></p>
 	</div>
 	<div id="isbn-search-results" class="row">
-		<img ng-src="{{thumbnail}}" />
+		<!--<<img ng-src="{{thumbnail}}" />-->
+	</div>
+	<div ng-if="googleBooks.length > 0" id="imagegrid">
+		<ul>
+			<li ng-repeat="googleBook in googleBooks">
+					<img ng-src="{{ googleBook.volumeInfo.imageLinks.thumbnail }}">
+					<h3>{{ googleBook.volumeInfo.title }}</h3>
+	      	<p>{{ googleBook.volumeInfo.authors }}</p>
+					<p>{{ googleBook.volumeInfo.description }}</p>
+			</li>
+		</ul>
+	</div>
+	<div ng-if="googleBooks.length == 0">
+  	No results found.
 	</div>
 	<div id="book-form" class="row">
 		<div class="col-sm-8 col-sm-offset-2 text-center">

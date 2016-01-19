@@ -22,13 +22,11 @@ bookApp.config(['$routeProvider',
       $scope.formData = {};
       $scope.books = [];
 	    $scope.nameFilter = null;
-      $scope.selectedImage = {};
       $scope.interface = {};
       $scope.bookQuery = {};
       $scope.details = [];
       $scope.bookInfo = {};
-      $scope.thumbnail = {};
-      $scope.isbnResponse = null;
+      $scope.googleBooks = null;
 
       BookService.getBooks().then(function(response) {
         $scope.books = response;
@@ -63,9 +61,8 @@ bookApp.config(['$routeProvider',
 
       $scope.isbnSearch = function() {
         var isbn = $scope.bookInfo;
-        BookService.isbnSearch(isbn).then(function(response) {
-            $scope.isbnResponse = response;
-            $scope.thumbnail = response.items[0].volumeInfo.imageLinks.thumbnail;
+        BookService.searchGoogleBooks(isbn).then(function(response) {
+            $scope.googleBooks = response.items;
         });
       }
 }]);
