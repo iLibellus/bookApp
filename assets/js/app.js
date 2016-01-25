@@ -12,6 +12,14 @@ bookApp.config(['$routeProvider',
 				templateUrl:'/templates/detail.html',
 				controller:'BookInfoCtrl'
 		})
+    .when('/about',{
+       templateUrl:'/templates/partials/login.html',
+       controller:'BookCtrl'
+   })
+    .when('/login',{
+       templateUrl:'/templates/partials/login.html',
+       controller:'BookCtrl'
+   })
 		.otherwise({
 		  redirectTo: '/',
 		  caseInsensitiveMatch: true

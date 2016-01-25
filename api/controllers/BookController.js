@@ -19,7 +19,7 @@ module.exports = {
         console.log('Added book with bookVal: ' + bookVal)
         console.log('Added book with bookName: ' + bookName)
         console.log('Added book with author: ' + bookAuthor)
-        BookService.addBook(id, bookName, bookAuthor, function(success) {
+        BookService.addBook(bookName, bookAuthor, function(success) {
             res.json(success);
         });
     },

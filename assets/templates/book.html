@@ -49,12 +49,15 @@
 		</div>
 	<div id="isbn-search-result" class="row">
 			<input type="text" class="form-control" placeholder="Enter isbn" onclick="isbnSearch()" style="width: 93%;" ng-model="bookInfo" />
-			<span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
+			<span class="glyphicon glyphicon-search"></span>
 			<input type="submit" class="btn btn-primary" ng-click="isbnSearch()" />
 			<p>Search icon: <span class="glyphicon glyphicon-search"></span></p>
 	</div>
-	<div id="isbn-search-results" class="row">
-		<!--<<img ng-src="{{thumbnail}}" />-->
+	<div class="form-group">
+		<div class="input-group">
+		  <input class="form-control" type="text" ng-model="bookInfo" ng-submit="isbnSearch()"/>
+		  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+		</div>
 	</div>
 	<div ng-if="googleBooks.length > 0" id="imagegrid">
 		<ul>

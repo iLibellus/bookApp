@@ -16,7 +16,9 @@ var tmpPath = '.tmp/public/';
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'styles/**/*.css'
+  'styles/**/*.css',
+  '/bower_components/angular-motion/dist/*.css',
+  '/bower_components/bootstrap/dist/css/*.css'
 ];
 
 
@@ -56,7 +58,8 @@ var jsFilesToInject = [
 // templates get spit out to the same file.  Be sure and check out `tasks/README.md`
 // for information on customizing and installing new tasks.
 var templateFilesToInject = [
-  'templates/*.html'
+  'templates/*.html',
+  'templates/partials/*.html'
 ];
 
 

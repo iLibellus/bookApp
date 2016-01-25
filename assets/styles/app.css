@@ -99,3 +99,18 @@ droplet ul.files li div.size {
 	font-family: Lato, Arial, Tahoma, Helvetica, sans-serif;
 	padding: 1px 4px;
 }
+
+.usericon input {
+    padding-left:25px;
+}
+.usericon:before {
+    height: 100%;
+    width: 25px;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    position: absolute;
+    content: "\e008";
+    font-family: 'Glyphicons Halflings';
+    pointer-events: none;
+}
