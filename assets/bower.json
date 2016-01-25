@@ -1,0 +1,27 @@
+{
+  "name": "bookApp",
+  "homepage": "https://github.com/iLibellus/bookApp",
+  "authors": [
+    "Elisabet Svärd <elisabet.svard@transmode.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angular-strap": "~2.3.6",
+    "ng-droplet": "~0.5.9",
+    "progressbar.js": "~0.8.1",
+    "angular-motion": "~0.4.3"
+  }
+}
