@@ -26,7 +26,9 @@
     "sails": "~0.11.0",
     "sails-disk": "~0.10.0",
     "skipper": "^0.5.8",
-    "progressbar.js": "~0.8.1"
+    "bcrypt": "~0.8.5",
+    "passport": "~0.3.2",
+    "passport-local": "~1.0.0"
   },
   "scripts": {
     "debug": "node debug app.js",
