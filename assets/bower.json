@@ -23,6 +23,8 @@
     "ng-droplet": "~0.5.9",
     "progressbar.js": "~0.8.1",
     "angular-motion": "~0.4.3",
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "font-awesome": "font-awsome#~4.5.0",
+    "ngstorage": "~0.3.10"
   }
 }

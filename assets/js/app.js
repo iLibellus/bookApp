@@ -1,12 +1,15 @@
 'use strict';
 
-var bookApp = angular.module('bookApp', ['ngRoute', 'ngAnimate', 'mgcrea.ngStrap', 'ngDroplet']);
-bookApp.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.when('/', {
-      templateUrl: '/templates/book.html',
-      controller: 'BookCtrl'
-    }) //.when adds new route definition to $route service
+var bookApp = angular.module('bookApp', ['ngRoute', 'ngAnimate', 'mgcrea.ngStrap', 'ngDroplet', 'ngStorage']);
+bookApp.config(['$routeProvider', '$httpProvider',
+  function($routeProvider, $httpProvider) {
+    $routeProvider.when('/',{
+         templateUrl:'/templates/book.html',
+         controller: 'BookCtrl'
+     }).when('/login', {
+        templateUrl: '/templates/partials/login.html',
+        controller: 'LoginCtrl'
+      }) //.when adds new route definition to $route service
 	   .when('/book/getBookByName/:bookid',{
 	   			//Profile View Routing to profile.html and controller - ProfileController
 				templateUrl:'/templates/detail.html',
@@ -16,15 +19,41 @@ bookApp.config(['$routeProvider',
        templateUrl:'/templates/partials/login.html',
        controller:'BookCtrl'
    })
-    .when('/login',{
-       templateUrl:'/templates/partials/login.html',
-       controller:'BookCtrl'
-   })
 		.otherwise({
 		  redirectTo: '/',
 		  caseInsensitiveMatch: true
-		})
+		});
+
+    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+        return {
+            'request': function (config) {
+                config.headers = config.headers || {};
+                if ($localStorage.token) {
+                    config.headers.Authorization = 'Bearer ' + $localStorage.token;
+                }
+                return config;
+            },
+            'responseError': function (response) {
+                if (response.status === 401 || response.status === 403) {
+                    delete $localStorage.token;
+                    $location.path('/signin');
+                }
+                return $q.reject(response);
+            }
+        };
+    }]);
   }]);
+
+bookApp.run(function($rootScope, $location, $localStorage) {
+    $rootScope.$on( "$routeChangeStart", function(event, next) {
+        if ($localStorage.token == null) {
+            if ( next.templateUrl === "partials/restricted.html") {
+                $location.path("/signin");
+            }
+        }
+    });
+});
+
 
   bookApp.controller('BookCtrl', ['$scope', '$rootScope', '$log','BookService', function($scope, $rootScope, $log, BookService) {
       $scope.formData = {};
@@ -75,6 +104,17 @@ bookApp.config(['$routeProvider',
       }
 }]);
 
+bookApp.controller('LoginCtrl', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {
+  $scope.logedin = false;
+  $scope.login = function() {
+    UserService.signin($scope.user).then(function(response) {
+        $rootScope.loggedInUser = response;
+    });
+
+  }
+
+}]);
+
 bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log', '$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
 	//Store detail id in Controller
 	$scope.bookid = $routeParams.bookid;
@@ -98,11 +138,16 @@ bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log', '$routeParams', 'B
 bookApp.controller('ModalController', function($scope, $modal) {
   // Pre-fetch an external template populated with a custom scope
   var myModal = $modal({scope: $scope, animation:"am-fade-and-scale", template: '/templates/modal/modal.bookinfo.tpl.html', show: false});
+  var signinModal = $modal({scope: $scope, animation:"am-fade-and-scale", template: '/templates/modal/modal.login.html', show: false});
   // Show when some event occurs (use $promise property to ensure the template has been loaded)
   $scope.showModal = function(book) {
     $scope.selectedBook = book
     myModal.$promise.then(myModal.show);
   };
+
+  $scope.showSigninModal = function() {
+    signinModal.$promise.then(signinModal.show);
+  }
 });
 
 bookApp.controller('FileController', ['$scope', '$timeout', 'BookService', function($scope, $timeout, BookService) {

@@ -18,7 +18,8 @@ var tmpPath = '.tmp/public/';
 var cssFilesToInject = [
   'styles/**/*.css',
   '/bower_components/angular-motion/dist/*.css',
-  '/bower_components/bootstrap/dist/css/*.css'
+  '/bower_components/bootstrap/dist/css/*.css',
+  '/bower_components/font-awsome/css/*.css'
 ];
 
 
@@ -36,6 +37,7 @@ var jsFilesToInject = [
 	'/bower_components/angular-strap/dist/angular-strap.tpl.min.js',
   '/bower_components/ng-droplet/dist/ng-droplet.min.js',
   '/bower_components/progressbar.js/dist/progressbar.min.js',
+  '/bower_components/ngstorage/ngStorage.min.js',
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
 
