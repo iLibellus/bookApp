@@ -46,5 +46,6 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 'get /book/getBookByName/:bookid': 'BookController.getBookByName',
-'post /auth/signin/:user': 'AuthController.signin'
+'post /auth/signin/:user': 'AuthController.signin',
+'post /auth/signup/:user': 'AuthController.signup'
 };

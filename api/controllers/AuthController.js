@@ -31,6 +31,7 @@ module.exports = {
  * @param {Object} res Response object
  */
 signup: function (req, res) {
+	console.log('Added user with name: ' + req.body.username)
 	User
 		.create(_.omit(req.allParams(), 'id'))
 		.then(function (user) {

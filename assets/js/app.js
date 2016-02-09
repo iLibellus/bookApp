@@ -7,7 +7,7 @@ bookApp.config(['$routeProvider', '$httpProvider',
          templateUrl:'/templates/book.html',
          controller: 'BookCtrl'
      }).when('/login', {
-        templateUrl: '/templates/partials/login.html',
+        templateUrl: '/templates/partials/signup.html',
         controller: 'LoginCtrl'
       }) //.when adds new route definition to $route service
 	   .when('/book/getBookByName/:bookid',{
@@ -19,6 +19,10 @@ bookApp.config(['$routeProvider', '$httpProvider',
        templateUrl:'/templates/partials/login.html',
        controller:'BookCtrl'
    })
+   .when('/signup',{
+      templateUrl:'/templates/partials/signup.html',
+      controller:'LoginCtrl'
+  })
 		.otherwise({
 		  redirectTo: '/',
 		  caseInsensitiveMatch: true
@@ -104,15 +108,43 @@ bookApp.run(function($rootScope, $location, $localStorage) {
       }
 }]);
 
-bookApp.controller('LoginCtrl', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {
-  $scope.logedin = false;
-  $scope.login = function() {
-    UserService.signin($scope.user).then(function(response) {
-        $rootScope.loggedInUser = response;
-    });
+bookApp.controller('LoginCtrl', ['$scope', '$location', '$rootScope', '$localStorage', 'UserService', function($scope, $location, $rootScope, $localStorage, UserService) {
+    function successAuth(res) {
+      $localStorage.token = res.token;
+      window.location = "/";
+    }
 
-  }
+    $scope.signin = function () {
+        var formData = {
+            email: $scope.email,
+            username: 'sune6',
+            password: $scope.password
+        };
 
+        UserService.signin(formData, successAuth, function () {
+            $rootScope.error = 'Invalid credentials.';
+        })
+    };
+
+    $scope.signup = function () {
+        var formData = {
+            email: $scope.email,
+            username: 'sune6',
+            password: $scope.password
+        };
+
+        UserService.signup(formData, successAuth, function (res) {
+            $rootScope.error = res.error || 'Failed to sign up.';
+        })
+    };
+
+    $scope.logout = function () {
+        UserService.logout(function () {
+            window.location = "/"
+        });
+    };
+    $scope.token = $localStorage.token;
+    $scope.tokenClaims = UserService.getTokenClaims();
 }]);
 
 bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log', '$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
@@ -147,6 +179,12 @@ bookApp.controller('ModalController', function($scope, $modal) {
 
   $scope.showSigninModal = function() {
     signinModal.$promise.then(signinModal.show);
+  };
+
+  $scope.closeSigninModal = function(url) {
+    console.log(url)
+    window.location = url
+    signinModal.hide();
   }
 });
 
