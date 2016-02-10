@@ -6,10 +6,7 @@ bookApp.config(['$routeProvider', '$httpProvider',
     $routeProvider.when('/',{
          templateUrl:'/templates/book.html',
          controller: 'BookCtrl'
-     }).when('/login', {
-        templateUrl: '/templates/partials/signup.html',
-        controller: 'LoginCtrl'
-      }) //.when adds new route definition to $route service
+     })
 	   .when('/book/getBookByName/:bookid',{
 	   			//Profile View Routing to profile.html and controller - ProfileController
 				templateUrl:'/templates/detail.html',
@@ -50,6 +47,7 @@ bookApp.config(['$routeProvider', '$httpProvider',
 
 bookApp.run(function($rootScope, $location, $localStorage) {
     $rootScope.$on( "$routeChangeStart", function(event, next) {
+      console.log('Trying to auth: ' + $rootScope.isAuth);
         if ($localStorage.token == null) {
             if ( next.templateUrl === "partials/restricted.html") {
                 $location.path("/signin");
@@ -109,9 +107,15 @@ bookApp.run(function($rootScope, $location, $localStorage) {
 }]);
 
 bookApp.controller('LoginCtrl', ['$scope', '$location', '$rootScope', '$localStorage', 'UserService', function($scope, $location, $rootScope, $localStorage, UserService) {
+    $scope.token = $localStorage.token;
+    $scope.tokenClaims = UserService.getTokenClaims();
+    $rootScope.isAuth = angular.equals({}, $scope.token);
+
     function successAuth(res) {
+      console.log('Trying to auth: ' + $rootScope.isAuth);
       $localStorage.token = res.token;
-      window.location = "/";
+      $rootScope.$broadcast('$successAuth');
+      //window.location = "/";
     }
 
     $scope.signin = function () {
@@ -121,9 +125,22 @@ bookApp.controller('LoginCtrl', ['$scope', '$location', '$rootScope', '$localSto
             password: $scope.password
         };
 
-        UserService.signin(formData, successAuth, function () {
+        /*UserService.signin(formData, successAuth, function () {
+          console.log('Signin: ' + res);
+          if(res.ok) {
+            $scope.$broadcast('$successAuth');
+          }
             $rootScope.error = 'Invalid credentials.';
-        })
+        })*/
+        UserService.signin(formData, successAuth).then(function(response) {
+          if(response.token) {
+            $rootScope.isAuth = true;
+            successAuth(response);
+          } else {
+            $rootScope.isAuth = false;
+            $rootScope.error = 'Invalid credentials.';
+          }
+        });
     };
 
     $scope.signup = function () {
@@ -143,8 +160,6 @@ bookApp.controller('LoginCtrl', ['$scope', '$location', '$rootScope', '$localSto
             window.location = "/"
         });
     };
-    $scope.token = $localStorage.token;
-    $scope.tokenClaims = UserService.getTokenClaims();
 }]);
 
 bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log', '$routeParams', 'BookInfoService', function($scope,$http,$log,$routeParams, BookInfoService){
@@ -167,6 +182,30 @@ bookApp.controller('BookInfoCtrl',['$scope', '$http', '$log', '$routeParams', 'B
 	//}
 }]);
 
+bookApp.controller('NavController', function($scope, $rootScope, $modal) {
+  var signinModal = $modal({scope: $scope, animation:"am-fade-and-scale", template: '/templates/modal/modal.login.html', show: false});
+  $scope.showLogin = function() {
+    signinModal.$promise.then(signinModal.show);
+  };
+  $scope.closeLogin = function(url) {
+    console.log(url)
+    if(url != '') {
+        window.location = url
+    }
+    signinModal.hide();
+  };
+  $scope.logout = function () {
+      UserService.logout(function () {
+          window.location = "/"
+      });
+  };
+
+   $rootScope.$on('$successAuth', function(event) {console.log('Closing login-modal.')
+     $scope.closeLogin('');
+   });
+
+});
+
 bookApp.controller('ModalController', function($scope, $modal) {
   // Pre-fetch an external template populated with a custom scope
   var myModal = $modal({scope: $scope, animation:"am-fade-and-scale", template: '/templates/modal/modal.bookinfo.tpl.html', show: false});
@@ -176,16 +215,6 @@ bookApp.controller('ModalController', function($scope, $modal) {
     $scope.selectedBook = book
     myModal.$promise.then(myModal.show);
   };
-
-  $scope.showSigninModal = function() {
-    signinModal.$promise.then(signinModal.show);
-  };
-
-  $scope.closeSigninModal = function(url) {
-    console.log(url)
-    window.location = url
-    signinModal.hide();
-  }
 });
 
 bookApp.controller('FileController', ['$scope', '$timeout', 'BookService', function($scope, $timeout, BookService) {
